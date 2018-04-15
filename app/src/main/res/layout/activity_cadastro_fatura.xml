@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".CadastroFatura"
+    tools:layout_editor_absoluteY="81dp">
+
+    <Spinner
+        android:id="@+id/spinner"
+        android:layout_width="131dp"
+        android:layout_height="37dp"
+        tools:layout_editor_absoluteX="70dp"
+        tools:layout_editor_absoluteY="267dp" />
+
+    <Spinner
+        android:id="@+id/spinner4"
+        android:layout_width="131dp"
+        android:layout_height="37dp"
+        tools:layout_editor_absoluteX="208dp"
+        tools:layout_editor_absoluteY="267dp" />
+
+    <TextView
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="12dp"
+        android:text="Mês"
+        app:layout_constraintBottom_toTopOf="@+id/spinner"
+        app:layout_constraintStart_toStartOf="@+id/spinner" />
+
+    <TextView
+        android:id="@+id/textView7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="12dp"
+        android:layout_marginStart="4dp"
+        android:text="Ano"
+        app:layout_constraintBottom_toTopOf="@+id/spinner4"
+        app:layout_constraintStart_toStartOf="@+id/spinner4" />
+
+    <EditText
+        android:id="@+id/editText13"
+        android:layout_width="347dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="ID Fatura"
+        tools:layout_editor_absoluteX="32dp"
+        tools:layout_editor_absoluteY="42dp" />
+
+    <EditText
+        android:id="@+id/editText14"
+        android:layout_width="347dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="CPF/CNPJ"
+        tools:layout_editor_absoluteX="32dp"
+        tools:layout_editor_absoluteY="97dp" />
+
+    <EditText
+        android:id="@+id/editText15"
+        android:layout_width="347dp"
+        android:layout_height="wrap_content"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:text="Consumo KhW"
+        tools:layout_editor_absoluteX="32dp"
+        tools:layout_editor_absoluteY="159dp" />
+
+    <Button
+        android:id="@+id/button9"
+        android:layout_width="347dp"
+        android:layout_height="wrap_content"
+        android:background="@color/cpfl"
+        android:text="GERAR FATURA"
+        android:textColor="@android:color/background_light"
+        tools:layout_editor_absoluteX="32dp"
+        tools:layout_editor_absoluteY="524dp" />
+
+    <TextView
+        android:id="@+id/textView8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Valor Total:"
+        android:textColor="@color/cpfl"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="120dp"
+        tools:layout_editor_absoluteY="457dp" />
+
+    <TextView
+        android:id="@+id/textView11"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Valor do Imposto (%):"
+        android:textColor="@color/cpfl"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="40dp"
+        tools:layout_editor_absoluteY="419dp" />
+
+    <TextView
+        android:id="@+id/textView10"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Valor KhW em R$:"
+        android:textColor="@color/cpfl"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="70dp"
+        tools:layout_editor_absoluteY="381dp" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Bandeira:"
+        android:textColor="@color/cpfl"
+        android:textSize="18sp"
+        tools:layout_editor_absoluteX="137dp"
+        tools:layout_editor_absoluteY="347dp" />
+</android.support.constraint.ConstraintLayout>
