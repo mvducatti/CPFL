@@ -11,15 +11,19 @@
         android:id="@+id/spinner"
         android:layout_width="131dp"
         android:layout_height="37dp"
-        tools:layout_editor_absoluteX="70dp"
-        tools:layout_editor_absoluteY="267dp" />
+        android:layout_marginBottom="8dp"
+        android:layout_marginEnd="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline7"
+        app:layout_constraintEnd_toStartOf="@+id/guideline8" />
 
     <Spinner
         android:id="@+id/spinner4"
         android:layout_width="131dp"
         android:layout_height="37dp"
-        tools:layout_editor_absoluteX="208dp"
-        tools:layout_editor_absoluteY="267dp" />
+        android:layout_marginBottom="8dp"
+        android:layout_marginStart="8dp"
+        app:layout_constraintBottom_toTopOf="@+id/guideline7"
+        app:layout_constraintStart_toStartOf="@+id/guideline8" />
 
     <TextView
         android:id="@+id/textView6"
@@ -45,31 +49,34 @@
         android:id="@+id/editText13"
         android:layout_width="347dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="ID Fatura"
-        tools:layout_editor_absoluteX="32dp"
-        tools:layout_editor_absoluteY="42dp" />
+        app:layout_constraintBottom_toTopOf="@+id/editText14"
+        tools:layout_editor_absoluteX="32dp" />
 
     <EditText
         android:id="@+id/editText14"
         android:layout_width="347dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:ems="10"
         android:inputType="textPersonName"
-        android:text="CPF/CNPJ"
-        tools:layout_editor_absoluteX="32dp"
-        tools:layout_editor_absoluteY="97dp" />
+        android:text="CPF"
+        app:layout_constraintBottom_toTopOf="@+id/editText15"
+        tools:layout_editor_absoluteX="32dp" />
 
     <EditText
         android:id="@+id/editText15"
         android:layout_width="347dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
         android:ems="10"
         android:inputType="textPersonName"
         android:text="Consumo KhW"
-        tools:layout_editor_absoluteX="32dp"
-        tools:layout_editor_absoluteY="159dp" />
+        app:layout_constraintBottom_toTopOf="@+id/textView6"
+        tools:layout_editor_absoluteX="32dp" />
 
     <Button
         android:id="@+id/button9"
@@ -85,39 +92,61 @@
         android:id="@+id/textView8"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:text="Valor Total:"
         android:textColor="@color/cpfl"
         android:textSize="18sp"
-        tools:layout_editor_absoluteX="120dp"
-        tools:layout_editor_absoluteY="457dp" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline8"
+        app:layout_constraintTop_toBottomOf="@+id/textView11" />
 
     <TextView
         android:id="@+id/textView11"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:text="Valor do Imposto (%):"
         android:textColor="@color/cpfl"
         android:textSize="18sp"
-        tools:layout_editor_absoluteX="40dp"
-        tools:layout_editor_absoluteY="419dp" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline8"
+        app:layout_constraintTop_toBottomOf="@+id/textView10" />
 
     <TextView
         android:id="@+id/textView10"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
         android:text="Valor KhW em R$:"
         android:textColor="@color/cpfl"
         android:textSize="18sp"
-        tools:layout_editor_absoluteX="70dp"
-        tools:layout_editor_absoluteY="381dp" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline8"
+        app:layout_constraintTop_toBottomOf="@+id/textView9" />
 
     <TextView
         android:id="@+id/textView9"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="32dp"
         android:text="Bandeira:"
         android:textColor="@color/cpfl"
         android:textSize="18sp"
-        tools:layout_editor_absoluteX="137dp"
-        tools:layout_editor_absoluteY="347dp" />
+        app:layout_constraintEnd_toStartOf="@+id/guideline8"
+        app:layout_constraintTop_toTopOf="@+id/guideline7" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline7"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        app:layout_constraintGuide_percent="0.5" />
+
+    <android.support.constraint.Guideline
+        android:id="@+id/guideline8"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        app:layout_constraintGuide_percent="0.5" />
 </android.support.constraint.ConstraintLayout>
