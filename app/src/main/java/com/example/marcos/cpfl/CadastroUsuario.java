@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -24,7 +25,9 @@ import java.util.Map;
 
 public class CadastroUsuario extends AppCompatActivity {
 
-    private EditText editTextCPF, editTextNome, editTextSenha, editTextRua, editTextNumero, editTextBairro, editTextCidade, editTextEstado;
+    private EditText editTextCPF, editTextNome, editTextSenha, editTextRua,
+            editTextNumero, editTextBairro, editTextCidade;
+    private Spinner spinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,7 +41,7 @@ public class CadastroUsuario extends AppCompatActivity {
         editTextNumero = findViewById(R.id.txtNumero);
         editTextBairro = findViewById(R.id.txtBairro);
         editTextCidade = findViewById(R.id.txtCidade);
-        editTextEstado = findViewById(R.id.txtEstado);
+        spinner = findViewById(R.id.spinner);
 
     }
 
@@ -52,7 +55,7 @@ public class CadastroUsuario extends AppCompatActivity {
         final String numero = editTextNumero.getText().toString().trim();
         final String bairro = editTextBairro.getText().toString().trim();
         final String cidade = editTextCidade.getText().toString().trim();
-        final String estado = editTextEstado.getText().toString().trim();
+        final String estado = spinner.getSelectedItem().toString();
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.URL_REGISTER,
                 new com.android.volley.Response.Listener<String>(){
@@ -72,7 +75,7 @@ public class CadastroUsuario extends AppCompatActivity {
                                 editTextNumero.setText("");
                                 editTextBairro.setText("");
                                 editTextCidade.setText("");
-                                editTextEstado.setText("");
+                                spinner.setSelection(0);
 
                             }else{
                                 Snackbar.make(findViewById(android.R.id.content),obj.getString("message"),Snackbar.LENGTH_LONG).show();

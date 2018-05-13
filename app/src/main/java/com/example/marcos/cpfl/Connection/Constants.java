@@ -7,7 +7,7 @@ public class Constants {
 
     //    conexão secundária acessando os folders users e news
     private static final String ROOT_USERS= "users/";
-//    private static final String ROOT_NEWS = "news/";
+    private static final String ROOT_NEWS = "taxes/";
 
 //    acessando os métodos de POST e GET utilizando ROOT_URL + ROOT_USERS ou ROOT_NEWS e o restante to path em ""
 
@@ -15,7 +15,8 @@ public class Constants {
     public static final String URL_REGISTER = ROOT_URL+ROOT_USERS+"createUser.php";
     public static final String URL_LOGIN = ROOT_URL+ROOT_USERS+"userLogin.php";
 
-    //    CALLS DE NOTICIAS
+    //    CALLS DE TAXAS
+    public static final String URL_SHOW_TAXES = ROOT_URL+ROOT_NEWS+"getTaxes.php";
+    public static final String URL_UPDATE_TAXES = ROOT_URL+ROOT_NEWS+"updateTaxes.php";
 //    public static final String URL_REGISTER_NEWS = ROOT_URL+ROOT_NEWS+"registerNews.php";
-//    public static final String URL_SHOW_NEWS = ROOT_URL+ROOT_NEWS+"getAllNews.php";
 }
