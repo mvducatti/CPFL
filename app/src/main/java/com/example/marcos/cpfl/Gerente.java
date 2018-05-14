@@ -7,6 +7,7 @@ import android.support.design.widget.TextInputEditText;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
@@ -45,8 +46,8 @@ public class Gerente extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_gerente);
 
-//        Toolbar myToolbar = findViewById(R.id.my_toolbar);
-//        setSupportActionBar(myToolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
         spinner = findViewById(R.id.spinnerBandeiras);
 
@@ -57,9 +58,14 @@ public class Gerente extends AppCompatActivity {
         tvkWh = findViewById(R.id.tvkWh);
         tvImposto = findViewById(R.id.tvImposto);
 
-
-
         loadTaxes();
+    }
+
+    //inflate menu so it can be shown
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.gerente_menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     private void loadTaxes() {
@@ -154,7 +160,7 @@ public class Gerente extends AppCompatActivity {
         RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
     }
 
-    public void logout(View view){
+    public void logout(){
         SharedPrefManager.getInstance(this).logout();
         startActivity(new Intent(this, LoginActivity.class));
         finish();
@@ -162,17 +168,19 @@ public class Gerente extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()) {
-            case R.id.logout_setting:
-                logout(null);
-                return true;
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
 
-            default:
-                // If we got here, the user's action was not recognized.
-                // Invoke the superclass to handle it.
-                return super.onOptionsItemSelected(item);
-
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            logout();
+            return true;
         }
+
+        return super.onOptionsItemSelected(item);
     }
+
 
 }
