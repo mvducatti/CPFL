@@ -120,11 +120,11 @@ public class Medidor extends AppCompatActivity {
             flagValue = 15;
         }
 
-        final float total = (((consumo * kwh) /100 * imposto) / 100 * flagValue);
+        final float total = (consumo * kwh) * (1.0f + (imposto / 100.0f)) * (1.0f + flagValue / 100.0f);
 
 //        final float total = Float.parseFloat(tvtotal.getText().toString().trim());
 
-        Snackbar.make(findViewById(android.R.id.content),"" + total,Snackbar.LENGTH_LONG).show();
+        Snackbar.make(findViewById(android.R.id.content), String.format("%.2f", total),Snackbar.LENGTH_LONG).show();
     }
 
 

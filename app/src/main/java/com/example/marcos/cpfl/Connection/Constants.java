@@ -3,7 +3,7 @@ package com.example.marcos.cpfl.Connection;
 public class Constants {
 
     //    conexão principal
-    private static final String ROOT_URL = "http://10.133.214.167:8080/cpfl/v1/";
+    private static final String ROOT_URL = "http://10.133.228.190:8080/cpfl/v1/";
 
     //    conexão secundária acessando os folders users e news
     private static final String ROOT_USERS= "users/";
