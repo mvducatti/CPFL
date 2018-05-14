@@ -36,7 +36,7 @@
         app:layout_constraintStart_toStartOf="@+id/guideline3" />
 
     <TextView
-        android:id="@+id/textView5"
+        android:id="@+id/txtBandeiraAtual"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -46,14 +46,14 @@
         app:layout_constraintTop_toBottomOf="@+id/spinnerBandeiras" />
 
     <TextView
-        android:id="@+id/textView12"
+        android:id="@+id/txtkwhAtual"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
         android:layout_marginTop="8dp"
         android:text="kWh Atual:"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/textView5" />
+        app:layout_constraintTop_toBottomOf="@+id/txtBandeiraAtual" />
 
     <TextView
         android:id="@+id/textView13"
@@ -63,7 +63,7 @@
         android:layout_marginTop="8dp"
         android:text="Imposto atual:"
         app:layout_constraintEnd_toStartOf="@+id/guideline3"
-        app:layout_constraintTop_toBottomOf="@+id/textView12" />
+        app:layout_constraintTop_toBottomOf="@+id/txtkwhAtual" />
 
     <ImageView
         android:id="@+id/imageView4"
