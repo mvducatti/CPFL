@@ -149,7 +149,7 @@
         app:layout_constraintTop_toBottomOf="@+id/textView18" />
 
     <Spinner
-        android:id="@+id/spinnerMes"
+        android:id="@+id/spinnerMonth"
         android:layout_width="108dp"
         android:layout_height="37dp"
         android:layout_marginBottom="8dp"
@@ -159,7 +159,7 @@
         app:layout_constraintEnd_toStartOf="@+id/guideline2" />
 
     <Spinner
-        android:id="@+id/spinnerAno"
+        android:id="@+id/spinnerYear"
         android:layout_width="108dp"
         android:layout_height="37dp"
         android:layout_marginBottom="8dp"
@@ -175,8 +175,8 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:text="Mês"
-        app:layout_constraintBottom_toTopOf="@+id/spinnerMes"
-        app:layout_constraintStart_toStartOf="@+id/spinnerMes" />
+        app:layout_constraintBottom_toTopOf="@+id/spinnerMonth"
+        app:layout_constraintStart_toStartOf="@+id/spinnerMonth" />
 
     <TextView
         android:id="@+id/textView14"
@@ -185,8 +185,8 @@
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:text="Ano"
-        app:layout_constraintBottom_toTopOf="@+id/spinnerAno"
-        app:layout_constraintStart_toStartOf="@+id/spinnerAno" />
+        app:layout_constraintBottom_toTopOf="@+id/spinnerYear"
+        app:layout_constraintStart_toStartOf="@+id/spinnerYear" />
 
     <Button
         android:id="@+id/btnGerarFatura"

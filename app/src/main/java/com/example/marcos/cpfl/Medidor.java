@@ -1,5 +1,6 @@
 package com.example.marcos.cpfl;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
@@ -35,11 +36,12 @@ import java.util.Map;
 
 public class Medidor extends AppCompatActivity {
 
-    private Spinner spinnerMes, spinnerAno;
+    private Spinner spinnerMonth, spinnerYear;
     private TextView tvBandeira, tvkWh, tvImposto, tvtotal;
     private String verde = "Verde", amarelo = "Amarela", vermelho = "Vermelha";
     private Button calcular, gerarFatura;
     private EditText tietCPF, tietConsumo;
+    private int user_id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -48,8 +50,8 @@ public class Medidor extends AppCompatActivity {
 
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        spinnerMes = findViewById(R.id.spinnerMes);
-        spinnerAno = findViewById(R.id.spinnerAno);
+        spinnerMonth = findViewById(R.id.spinnerMonth);
+        spinnerYear = findViewById(R.id.spinnerYear);
 
         calcular = findViewById(R.id.btnCalcular);
         calcular.setEnabled(false);
@@ -172,6 +174,8 @@ public class Medidor extends AppCompatActivity {
                     if (!obj.getBoolean("error")){
 
                         Snackbar.make(findViewById(android.R.id.content),obj.getString("message"),Snackbar.LENGTH_LONG).show();
+                        user_id = obj.getInt("user_id");
+                        System.out.println(user_id);
 
                         calcular.setEnabled(true);
                         calcular.setBackgroundColor(Color.parseColor("#FF082D6C"));
@@ -210,18 +214,59 @@ public class Medidor extends AppCompatActivity {
 
     public void gerarGatura(){
 
-        Snackbar.make(findViewById(android.R.id.content), "Fatura Gerada com sucesso",Snackbar.LENGTH_LONG).show();
+        final int year = Integer.parseInt(spinnerYear.getSelectedItem().toString());
+        final int month = Integer.parseInt(spinnerMonth.getSelectedItem().toString());
+        final float consumo = Float.parseFloat(tvtotal.getText().toString().trim());
+        final int id = user_id;
 
-        tietCPF.setText("");
-        tietCPF.requestFocus();
-        tietConsumo.setText("");
-        tvtotal.setText("");
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.URL_REGISTER_FATURA,
+                new com.android.volley.Response.Listener<String>(){
+                    @SuppressLint("ResourceType")
+                    @Override
+                    public void onResponse(String response) {
+                        try {
+                            JSONObject obj = new JSONObject(response);
+                            if (!obj.getBoolean("error")){
 
-        calcular.setEnabled(false);
-        calcular.setBackgroundColor(Color.parseColor("#808080"));
+                                Snackbar.make(findViewById(android.R.id.content),obj.getString("message"),Snackbar.LENGTH_LONG).show();
 
-        gerarFatura.setEnabled(false);
-        gerarFatura.setBackgroundColor(Color.parseColor("#808080"));
+                                tietCPF.setText("");
+                                tietCPF.requestFocus();
+                                tietConsumo.setText("");
+                                tvtotal.setText("");
+
+                                calcular.setEnabled(false);
+                                calcular.setBackgroundColor(Color.parseColor("#808080"));
+
+                                gerarFatura.setEnabled(false);
+                                gerarFatura.setBackgroundColor(Color.parseColor("#808080"));
+
+                            }else{
+                                Snackbar.make(findViewById(android.R.id.content),obj.getString("message"),Snackbar.LENGTH_LONG).show();
+                            }
+                        } catch (JSONException e) {
+                            Toast.makeText(getApplicationContext(), "Erro 1: " + e, Toast.LENGTH_LONG).show();
+
+                        }
+                    }
+                }, new com.android.volley.Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getApplicationContext(), "Erro 2: " + error, Toast.LENGTH_LONG).show();
+            }
+        }
+        ){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("year", String.valueOf(year));
+                params.put("month", String.valueOf(month));
+                params.put("consumo", String.valueOf(consumo));
+                params.put("user_id", String.valueOf(id));
+                return params;
+            }
+        };
+        RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
     }
 
     @Override
