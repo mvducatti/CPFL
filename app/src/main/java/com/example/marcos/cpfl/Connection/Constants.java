@@ -3,7 +3,7 @@ package com.example.marcos.cpfl.Connection;
 public class Constants {
 
     //    conexão principal
-    private static final String ROOT_URL = "http://10.133.228.190:8080/cpfl/v1/";
+    private static final String ROOT_URL = "http://10.133.227.77:8080/cpfl/v1/";
 
     //    conexão secundária acessando os folders users e news
     private static final String ROOT_USERS= "users/";
@@ -14,6 +14,7 @@ public class Constants {
     //    CALLS DE USER
     public static final String URL_REGISTER = ROOT_URL+ROOT_USERS+"createUser.php";
     public static final String URL_LOGIN = ROOT_URL+ROOT_USERS+"userLogin.php";
+    public static final String URL_CHECK_USER = ROOT_URL+ROOT_USERS+"isUserRegistered.php";
 
     //    CALLS DE TAXAS
     public static final String URL_SHOW_TAXES = ROOT_URL+ROOT_NEWS+"getTaxes.php";

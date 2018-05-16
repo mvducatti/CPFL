@@ -1,6 +1,7 @@
 package com.example.marcos.cpfl;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -8,27 +9,36 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.example.marcos.cpfl.Connection.Constants;
+import com.example.marcos.cpfl.Connection.RequestHandler;
 import com.example.marcos.cpfl.SharedPreferences.SharedPrefManager;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.HashMap;
+import java.util.Map;
+
 public class Medidor extends AppCompatActivity {
 
     private Spinner spinnerMes, spinnerAno;
     private TextView tvBandeira, tvkWh, tvImposto, tvtotal;
     private String verde = "Verde", amarelo = "Amarela", vermelho = "Vermelha";
+    private Button calcular, gerarFatura;
     private EditText tietCPF, tietConsumo;
 
     @Override
@@ -41,6 +51,14 @@ public class Medidor extends AppCompatActivity {
         spinnerMes = findViewById(R.id.spinnerMes);
         spinnerAno = findViewById(R.id.spinnerAno);
 
+        calcular = findViewById(R.id.btnCalcular);
+        calcular.setEnabled(false);
+        calcular.setBackgroundColor(Color.parseColor("#808080"));
+
+        gerarFatura = findViewById(R.id.btnGerarFatura);
+        gerarFatura.setEnabled(false);
+        gerarFatura.setBackgroundColor(Color.parseColor("#808080"));
+
         tietCPF = findViewById(R.id.tietCPF);
         tietConsumo = findViewById(R.id.tietConsumo);
 
@@ -48,6 +66,12 @@ public class Medidor extends AppCompatActivity {
         tvkWh = findViewById(R.id.txtkwhAtual);
         tvImposto = findViewById(R.id.txtImpostoAtual);
         tvtotal = findViewById(R.id.txtTotal);
+
+        gerarFatura.setOnClickListener(new Button.OnClickListener() {
+            public void onClick(View v) {
+                gerarGatura();
+            }
+        });
 
         loadTaxes();
 
@@ -103,35 +127,101 @@ public class Medidor extends AppCompatActivity {
         Volley.newRequestQueue(this).add(request);
     }
 
-    public void gerarFatura (View view){
+    public void CalcularFatura (View view){
 
-        final float consumo = 200;
-        final float kwh = Float.parseFloat(tvkWh.getText().toString().trim());
-        final float imposto = Float.parseFloat(tvImposto.getText().toString().trim());
-        final String bandeira = tvBandeira.getText().toString().trim();
+        if (tietConsumo.length() <= 0){
+            tietConsumo.setError("Digite um valor");
+            Snackbar.make(findViewById(android.R.id.content), "Digite o valor do consumo",Snackbar.LENGTH_LONG).show();
+        }else{
+            final float consumo = Float.parseFloat(tietConsumo.getText().toString().trim());
 
-        float flagValue = 0;
+            final float kwh = Float.parseFloat(tvkWh.getText().toString().trim());
+            final float imposto = Float.parseFloat(tvImposto.getText().toString().trim());
+            final String bandeira = tvBandeira.getText().toString().trim();
 
-        if (bandeira.equals("Verde")){
-            flagValue = 2;
-        } else if (bandeira.equals("Amarela")){
-            flagValue = 8;
-        } else if (bandeira.equals("Vermelha")){
-            flagValue = 15;
+            float flagValue = 0;
+
+            if (bandeira.equals("Verde")){
+                flagValue = 2;
+            } else if (bandeira.equals("Amarela")){
+                flagValue = 8;
+            } else if (bandeira.equals("Vermelha")){
+                flagValue = 15;
+            }
+
+            final float total = (consumo * kwh) * (1.0f + (imposto / 100.0f)) * (1.0f + flagValue / 100.0f);
+
+            tvtotal.setText(String.format("%.2f", total));
+
+            Snackbar.make(findViewById(android.R.id.content), String.format("%.2f", total),Snackbar.LENGTH_LONG).show();
+
+            gerarFatura.setEnabled(true);
+            gerarFatura.setBackgroundColor(Color.parseColor("#FF082D6C"));
         }
-
-        final float total = (consumo * kwh) * (1.0f + (imposto / 100.0f)) * (1.0f + flagValue / 100.0f);
-
-//        final float total = Float.parseFloat(tvtotal.getText().toString().trim());
-
-        Snackbar.make(findViewById(android.R.id.content), String.format("%.2f", total),Snackbar.LENGTH_LONG).show();
     }
 
+    public void checkUser(View view){
+
+        final String cpf = tietCPF.getText().toString().trim();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, Constants.URL_CHECK_USER, new Response.Listener<String>(){
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONObject obj = new JSONObject(response);
+                    if (!obj.getBoolean("error")){
+
+                        Snackbar.make(findViewById(android.R.id.content),obj.getString("message"),Snackbar.LENGTH_LONG).show();
+
+                        calcular.setEnabled(true);
+                        calcular.setBackgroundColor(Color.parseColor("#FF082D6C"));
+                        tietConsumo.requestFocus();
+
+                    }else{
+                        tietCPF.setError(obj.getString("message"));
+//                        Snackbar.make(findViewById(android.R.id.content),obj.getString("message"),Snackbar.LENGTH_LONG).show();
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }
+        ){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("cpf", cpf);
+                return params;
+            }
+        };
+        RequestHandler.getInstance(this).addToRequestQueue(stringRequest);
+    }
 
     public void logout(){
         SharedPrefManager.getInstance(this).logout();
         startActivity(new Intent(this, LoginActivity.class));
         finish();
+    }
+
+    public void gerarGatura(){
+
+        Snackbar.make(findViewById(android.R.id.content), "Fatura Gerada com sucesso",Snackbar.LENGTH_LONG).show();
+
+        tietCPF.setText("");
+        tietCPF.requestFocus();
+        tietConsumo.setText("");
+        tvtotal.setText("");
+
+        calcular.setEnabled(false);
+        calcular.setBackgroundColor(Color.parseColor("#808080"));
+
+        gerarFatura.setEnabled(false);
+        gerarFatura.setBackgroundColor(Color.parseColor("#808080"));
     }
 
     @Override
