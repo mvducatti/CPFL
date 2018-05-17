@@ -14,6 +14,7 @@ public class SharedPrefManager {
     private static final String KEY_USER_TYPE = "user_type";
     private static final String KEY_USER_CPF = "usercpf";
     private static final String KEY_USER_ID = "userid";
+    private static final String KEY_USERNAME = "username";
 
 
     private SharedPrefManager(android.content.Context context) {
@@ -35,6 +36,7 @@ public class SharedPrefManager {
         editor.putInt(KEY_USER_ID, user.getId());
         editor.putString(KEY_USER_CPF, user.getCpf());
         editor.putInt(KEY_USER_TYPE, user.getUser_type());
+        editor.putString(KEY_USERNAME, user.getUsername());
 
         editor.apply();
 
@@ -58,7 +60,8 @@ public class SharedPrefManager {
         return new User(
                 sharedPreferences.getInt(KEY_USER_ID, -1),
                 sharedPreferences.getString(KEY_USER_CPF, null),
-                sharedPreferences.getInt(KEY_USER_TYPE, -1)
+                sharedPreferences.getInt(KEY_USER_TYPE, -1),
+                sharedPreferences.getString(KEY_USERNAME, null)
         );
     }
 }

@@ -7,7 +7,11 @@ import android.os.Bundle;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -33,11 +37,31 @@ public class Usuario extends AppCompatActivity {
     private LinearLayoutManager mLayoutManager;
     RecyclerView recyclerView;
     SharedPrefManager sharedPrefManager;
+    private TextView textviewUsername;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_usuario);
+
+        //------------ INICIO TOOLBAR ------------
+        Toolbar toolbar = findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
+
+        //------------ FINAL TOOLBAR ------------
+
+        //------------ INICIO DADOS DO USUARIO ------------
+
+        textviewUsername = findViewById(R.id.txtViewCPF);
+        textviewUsername.setText("CPF: "+SharedPrefManager.getInstance(this).getUser().getCpf());
+
+        textviewUsername = findViewById(R.id.txtViewusername);
+        textviewUsername.setText("Nome: "+SharedPrefManager.getInstance(this).getUser().getUsername());
+
+        //------------ FINAL DADOS DO USUARIO ------------
+
+
+        //------------ INICIO RECYCLERVIEWS ------------
 
         recyclerView = findViewById(R.id.recylerView);
 
@@ -52,7 +76,16 @@ public class Usuario extends AppCompatActivity {
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         faturaArrayList = new ArrayList<>();
 
+        //------------ FINAL RECYCLERVIEWS ------------
+
         loadFaturas();
+    }
+
+    //inflate menu so it can be shown
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.gerente_menu, menu);
+        return super.onCreateOptionsMenu(menu);
     }
 
     private void loadFaturas() {
@@ -109,7 +142,23 @@ public class Usuario extends AppCompatActivity {
         Volley.newRequestQueue(this).add(request);
     }
 
-    public void logout(View view){
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            logout();
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
+    }
+
+    public void logout(){
         SharedPrefManager.getInstance(this).logout();
         startActivity(new Intent(this, LoginActivity.class));
         finish();

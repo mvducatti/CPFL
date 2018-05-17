@@ -70,7 +70,7 @@ public class LoginActivity extends AppCompatActivity {
                     if (!obj.getBoolean("error")){
 
                         User user = new User(obj.getInt("user_id"), obj.getString("cpf"),
-                                obj.getInt("user_type")
+                                obj.getInt("user_type"), obj.getString("username")
                         );
 
                         SharedPrefManager.getInstance(getApplicationContext()).userLogin(user);
